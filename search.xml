@@ -1547,7 +1547,7 @@ Boss直聘上的招聘邀约纷至沓来，一开始只是预约了星期一的�
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
       <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">密码请用其他联络方式伸手要</span>
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">密码请用其他联络方式伸手要，输入密码后请刷新</span>
       </label>
     </div>
   </div>
