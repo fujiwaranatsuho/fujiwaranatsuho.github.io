@@ -102,8 +102,7 @@
   display: block;
   margin: 0 auto;
   margin-bottom: 20px;
-  visibility: hidden;
-  pointer-events: none;
+  
 }
 
 .hbe-button:active {
