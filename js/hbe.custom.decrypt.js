@@ -1,41 +1,71 @@
-(() => {
-  const container = document.getElementById('hexo-blog-encrypt');
-  const data = container?.querySelector('script[data-hbe-encrypted]');
-  if (!data) return;
+<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script>(() => {
+  'use strict';
 
-  const encryptedHex = data.innerText.trim();
-  const message = container.dataset.message || '密码错误';
-  const iv = hexToBuf(encryptedHex.slice(0, 32));
-  const encrypted = hexToBuf(encryptedHex.slice(32));
+  const cryptoObj = window.crypto || window.msCrypto;
+  const storage = window.localStorage;
+  const storageName = 'hexo-blog-encrypt:#' + window.location.pathname;
 
-  document.getElementById('hbeUnlock').onclick = async () => {
-    const pass = document.getElementById('hbePass').value;
+  function hexToArray(s) {
+    return new Uint8Array(s.match(/[\da-f]{2}/gi).map(h => parseInt(h, 16)));
+  }
+
+  function arrayBufferToHex(buffer) {
+    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+  }
+
+  async function getKeyMaterial(password) {
+    const encoder = new TextEncoder();
+    return cryptoObj.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey', 'deriveBits']);
+  }
+
+  function getKey(keyMaterial, salt) {
+    return cryptoObj.subtle.deriveKey({
+      name: 'PBKDF2',
+      salt: salt,
+      iterations: 100000,
+      hash: 'SHA-256'
+    }, keyMaterial, {
+      name: 'AES-CBC',
+      length: 256,
+    }, false, ['decrypt']);
+  }
+
+  async function decrypt(password, encryptedHex) {
+    const iv = hexToArray(encryptedHex.slice(0, 32));
+    const encryptedData = hexToArray(encryptedHex.slice(32));
+
+    const keyMaterial = await getKeyMaterial(password);
+    const key = await getKey(keyMaterial, iv);
+
     try {
-      const key = await sha256(pass);
-      const decrypted = await decryptAES(encrypted, key, iv);
+      const decrypted = await cryptoObj.subtle.decrypt({ name: 'AES-CBC', iv: iv }, key, encryptedData);
       const decoded = new TextDecoder().decode(decrypted);
-      if (!decoded.startsWith('<hbe-prefix>')) throw new Error();
-      container.innerHTML = decoded.replace('<hbe-prefix>', '');
-    } catch {
-      alert(message);
+      if (!decoded.startsWith('<hbe-prefix></hbe-prefix>')) throw new Error("Wrong prefix");
+      return decoded.slice('<hbe-prefix></hbe-prefix>'.length);
+    } catch (e) {
+      alert('🔐 密码错误，请重试');
+      throw e;
     }
-  };
-
-  async function sha256(str) {
-    const data = new TextEncoder().encode(str);
-    return await crypto.subtle.digest('SHA-256', data);
   }
 
-  async function decryptAES(buf, key, iv) {
-    const cryptoKey = await crypto.subtle.importKey('raw', key, { name: 'AES-CBC' }, false, ['decrypt']);
-    return await crypto.subtle.decrypt({ name: 'AES-CBC', iv }, cryptoKey, buf);
+  async function showContent(password, encrypted) {
+    const decrypted = await decrypt(password, encrypted);
+    const wrapper = document.getElementById('hexo-blog-encrypt');
+    wrapper.innerHTML = decrypted;
+    window.localStorage.setItem(storageName, password);
   }
 
-  function hexToBuf(hex) {
-    const bytes = new Uint8Array(hex.length / 2);
-    for (let i = 0; i < bytes.length; i++) {
-      bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
-    }
-    return bytes;
+  const wrapper = document.getElementById('hexo-blog-encrypt');
+  const script = wrapper.querySelector('script[data-hbe-encrypted]');
+  const encrypted = script.innerText;
+
+  const fromStorage = storage.getItem(storageName);
+  if (fromStorage) {
+    showContent(fromStorage, encrypted);
   }
+
+  document.getElementById('hbeUnlock').addEventListener('click', () => {
+    const password = document.getElementById('hbePass').value;
+    showContent(password, encrypted);
+  });
 })();
