@@ -25,12 +25,6 @@
     transform: scale(0.97);
   }
 }
-@font-face {
-  font-family: 'LXGWBright';
-  src: url('/fonts/LXGWBright-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 :root {
   --primary: #afb42b;
   --primary-70: rgba(175, 180, 43, 0.7);
@@ -3733,12 +3727,17 @@ pre .coffeescript .title {
 }
 @font-face {
   font-family: 'LXGWBright';
-  src: url('/fonts/LXGWBright-Regular.ttf') format('truetype');
+  src: url('../../fonts/LXGWBright-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 :root {
   --font-family-base: 'LXGWBright', 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+}
+body,
+.post-body,
+.article-content {
+  font-family: 'LXGWBright', sans-serif !important;
 }
 /* db-card -------- start */
 .db-card {
