@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'LXGWBright';
+  src: url('/fonts/LXGWBright-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --font-family-base: 'LXGWBright', 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+}
 :root .trm-dark-icon {
   display: none;
 }
