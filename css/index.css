@@ -3831,25 +3831,3 @@ pre .coffeescript .title {
   }
 }
 /* db-card -------- end */
-.hbe-input {
-  display: flex;
-  gap: 10px;
-  margin: 1em 0;
-}
-.hbe-input-field,
-.hbe-input button {
-  padding: 0.5em;
-  font-size: 1em;
-}
-.hbe-input-field {
-  flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.hbe-input button {
-  border: none;
-  background: #333;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
