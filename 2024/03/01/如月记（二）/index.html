@@ -562,28 +562,7 @@
         
 
         
-            <!-- 引入 Waline 的 JS 和 CSS -->
-            
-<script src="https://unpkg.com/@waline/client@v2/dist/waline.js" data-swup-reload-script></script>
-
-            <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
-
-            <script data-swup-reload-script>
-                document.addEventListener('DOMContentLoaded', function () {
-                if (typeof Waline !== 'undefined') {
-                    Waline.init({
-                    ...{"enable":true,"serverURL":"https://repo-gropdtonf-natsuhos-projects.vercel.app/","locale":"zh-CN","visitor":true,"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba","https://unpkg.com/@waline/emojis@1.0.1/bilibili"]},
-                    el: '#tcomment'
-                    });
-                } else {
-                    console.error('Waline.js 加载失败');
-                }
-                });
-            </script>
-
-
-
-        
+                
         
     
 
