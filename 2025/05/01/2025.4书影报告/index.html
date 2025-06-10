@@ -67,6 +67,7 @@
 
     
 <link rel="stylesheet" href="//unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+<link rel="stylesheet" href="//unpkg.com/@waline/client@v3/dist/waline.css">
 
     
 
@@ -477,15 +478,29 @@
     
 </div>
 
-    
+    <div id="waline" class="trm-card"></div>
+<script type="module" data-swup-reload-script>
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
-
-
-  <div class="trm-card trm-scroll-animation comment-container">
-  <div id="waline"></div>
-</div>
-
-
+  init({
+    serverURL: 'https://repo-gropdtonf-natsuhos-projects.vercel.app/',
+    el: '#waline',
+    emoji: [
+      '//unpkg.com/@waline/emojis@1.2.0/weibo',
+      '//unpkg.com/@waline/emojis@1.2.0/bmoji',
+      '//unpkg.com/@waline/emojis@1.2.0/alus',
+      '//unpkg.com/@waline/emojis@1.2.0/qq',
+      '//unpkg.com/@waline/emojis@1.2.0/bilibili',
+    ],
+    reaction: true,
+    reaction: [
+      'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_heart_eyes.png',
+      'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_joy.png',
+      'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_consider.png',
+      'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_sob.png',
+    ],
+  });
+</script>
 
 
 
@@ -597,7 +612,6 @@
         
 
         
-                
         
     
 
