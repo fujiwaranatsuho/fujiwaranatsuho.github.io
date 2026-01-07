@@ -781,7 +781,7 @@ html.is-animating .trm-swup-animation {
 .trm-top-bar .container .trm-left-side .trm-logo-frame .trm-logo-text {
   position: relative;
   font-weight: 900;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--theme-color, #00283a);
   letter-spacing: 0;
 }
@@ -1273,7 +1273,7 @@ blockquote:after {
   box-shadow: var(--box-shadow);
 }
 .trm-card .trm-icon {
-  font-size: 22px;
+  font-size: 24px;
   color: var(--theme-color, #00283a);
   margin-bottom: 20px;
 }
@@ -1644,7 +1644,7 @@ blockquote:after {
   padding: var(--card-padding, 40px);
 }
 .trm-blog-card .trm-card-descr h5 a {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
@@ -3739,6 +3739,115 @@ body,
 .article-content {
   font-family: 'LXGWBright', sans-serif !important;
 }
+/* ============================================================
+   1. 基础容器与背景强制覆盖
+   ============================================================ */
+/* 强制主容器背景为粉色，并添加胶带装饰 */
+#waline.trm-card {
+  background: #fff0f6 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), inset 0 0 10px #ffe6eb !important;
+  position: relative !important;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+/* 装饰胶带 - 增加 z-index 确保它浮在最上层 */
+#waline.trm-card::before,
+#waline.trm-card::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 60px;
+  height: 20px;
+  background: repeating-linear-gradient(-45deg, #ffd6e0, #ffd6e0 5px, #ffc0cb 5px, #ffc0cb 10px) !important;
+  top: -10px;
+  opacity: 0.8;
+  z-index: 99;
+}
+#waline.trm-card::before {
+  left: 12px;
+  transform: rotate(-3deg);
+}
+#waline.trm-card::after {
+  right: 12px;
+  transform: rotate(5deg);
+}
+/* ============================================================
+   2. 输入面板 (wl-panel) 样式修正
+   ============================================================ */
+#waline .wl-panel {
+  background: #fff0f6 !important;
+  /* 确保内部面板也是粉色 */
+  border: 1px dashed #f3b6c1 !important;
+  /* 改为虚线更有手帐感 */
+  border-radius: 8px !important;
+  margin: 10px 0 !important;
+}
+/* 顶部：昵称、邮箱、网址区域 */
+#waline .wl-header {
+  border-bottom: 1px dashed #f3b6c1 !important;
+  background: transparent !important;
+}
+#waline .wl-header .wl-header-item label {
+  color: #6b4c4c !important;
+  /* 字体颜色 */
+}
+/* 重点：针对你截图中那个巨大的文本域 textarea#wl-edit.wl-editor */
+#waline textarea#wl-edit.wl-editor {
+  background: transparent !important;
+  color: #6b4c4c !important;
+  padding: 1.5rem !important;
+  font-family: 'LXGWBright', sans-serif !important;
+  min-height: 140px !important;
+  outline: none !important;
+}
+/* ============================================================
+   3. 底部工具栏与按钮 (wl-footer / wl-btn)
+   ============================================================ */
+#waline .wl-footer {
+  background: transparent !important;
+}
+/* 按钮样式覆盖 (绿色 -> 粉色) */
+#waline .wl-btn {
+  border-radius: 6px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+}
+/* 提交按钮具体的颜色覆盖 */
+#waline .wl-btn.wl-btn-primary {
+  background-color: #f3b6c1 !important;
+  border: none !important;
+  color: white !important;
+}
+#waline .wl-btn.wl-btn-primary:hover {
+  background-color: #ff9dbb !important;
+  transform: translateY(-2px);
+}
+/* 登录按钮 */
+#waline .wl-btn:not(.wl-btn-primary) {
+  background: white !important;
+  border: 1px solid #f3b6c1 !important;
+  color: #f3b6c1 !important;
+}
+/* ============================================================
+   4. 评论卡片列表 (wl-cards)
+   ============================================================ */
+#waline .wl-cards .wl-card {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  margin-top: 15px !important;
+  border: 1px solid #f2f2f2 !important;
+  padding: 15px !important;
+  transition: transform 0.3s ease;
+}
+#waline .wl-cards .wl-card:hover {
+  transform: scale(1.01);
+}
+/* 表情区居中 */
+#waline .wl-reaction-list {
+  justify-content: center !important;
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
@@ -3845,117 +3954,3 @@ body,
   }
 }
 /* db-card -------- end */
-
-/* ============================================================
-   1. 基础容器与背景强制覆盖
-   ============================================================ */
-/* 强制主容器背景为粉色，并添加胶带装饰 */
-#waline.trm-card {
-  background: #fff0f6 !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 1.5rem !important;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), inset 0 0 10px #ffe6eb !important;
-  position: relative !important;
-  max-width: 800px;
-  margin: 2rem auto;
-}
-
-/* 装饰胶带 - 增加 z-index 确保它浮在最上层 */
-#waline.trm-card::before,
-#waline.trm-card::after {
-  content: "" !important;
-  position: absolute !important;
-  width: 60px;
-  height: 20px;
-  background: repeating-linear-gradient(-45deg, #ffd6e0, #ffd6e0 5px, #ffc0cb 5px, #ffc0cb 10px) !important;
-  top: -10px;
-  opacity: 0.8;
-  z-index: 99;
-}
-#waline.trm-card::before { left: 12px; transform: rotate(-3deg); }
-#waline.trm-card::after { right: 12px; transform: rotate(5deg); }
-
-/* ============================================================
-   2. 输入面板 (wl-panel) 样式修正
-   ============================================================ */
-#waline .wl-panel {
-  background: #fff0f6 !important; /* 确保内部面板也是粉色 */
-  border: 1px dashed #f3b6c1 !important; /* 改为虚线更有手帐感 */
-  border-radius: 8px !important;
-  margin: 10px 0 !important;
-}
-
-/* 顶部：昵称、邮箱、网址区域 */
-#waline .wl-header {
-  border-bottom: 1px dashed #f3b6c1 !important;
-  background: transparent !important;
-}
-
-#waline .wl-header .wl-header-item label {
-  color: #6b4c4c !important; /* 字体颜色 */
-}
-
-/* 重点：针对你截图中那个巨大的文本域 textarea#wl-edit.wl-editor */
-#waline textarea#wl-edit.wl-editor {
-  background: transparent !important;
-  color: #6b4c4c !important;
-  padding: 1.5rem !important;
-  font-family: 'LXGWBright', sans-serif !important;
-  min-height: 140px !important;
-  outline: none !important;
-}
-
-/* ============================================================
-   3. 底部工具栏与按钮 (wl-footer / wl-btn)
-   ============================================================ */
-#waline .wl-footer {
-  background: transparent !important;
-}
-
-/* 按钮样式覆盖 (绿色 -> 粉色) */
-#waline .wl-btn {
-  border-radius: 6px !important;
-  font-weight: bold !important;
-  transition: all 0.3s ease !important;
-}
-
-/* 提交按钮具体的颜色覆盖 */
-#waline .wl-btn.wl-btn-primary {
-  background-color: #f3b6c1 !important;
-  border: none !important;
-  color: white !important;
-}
-
-#waline .wl-btn.wl-btn-primary:hover {
-  background-color: #ff9dbb !important;
-  transform: translateY(-2px);
-}
-
-/* 登录按钮 */
-#waline .wl-btn:not(.wl-btn-primary) {
-  background: white !important;
-  border: 1px solid #f3b6c1 !important;
-  color: #f3b6c1 !important;
-}
-
-/* ============================================================
-   4. 评论卡片列表 (wl-cards)
-   ============================================================ */
-#waline .wl-cards .wl-card {
-  background: #ffffff !important;
-  border-radius: 12px !important;
-  margin-top: 15px !important;
-  border: 1px solid #f2f2f2 !important;
-  padding: 15px !important;
-  transition: transform 0.3s ease;
-}
-
-#waline .wl-cards .wl-card:hover {
-  transform: scale(1.01);
-}
-
-/* 表情区居中 */
-#waline .wl-reaction-list {
-  justify-content: center !important;
-}
