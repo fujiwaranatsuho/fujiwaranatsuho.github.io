@@ -3774,30 +3774,67 @@ body,
   pointer-events: none;
   z-index: 0;
 }
-/* 4. 邮戳（右上角，确保可见） */
+/* 4. 邮戳（更像真实邮戳：双圈 + 断墨 + 内部装饰） */
 #waline.trm-card::after {
-  content: "NOTES";
-  /* 可改：留言 / natsuho / NOTE */
+  content: "NOTES" !important;
+  /* 可改：留言 / natsuho */
   position: absolute;
-  top: 12px;
-  right: 14px;
-  width: 86px;
-  height: 86px;
+  top: 10px;
+  right: 12px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
-  border: 2px dashed rgba(169, 182, 52, 0.55);
-  box-shadow: 0 0 0 2px rgba(169, 182, 52, 0.18) inset;
+  /* 外圈：齿孔感（更像邮戳边缘） */
+  border: 2px dashed rgba(169, 182, 52, 0.65);
+  /* 内圈：细实线圈 + 很轻的“压印” */
+  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0) inset, 0 0 0 7px rgba(169, 182, 52, 0.22) inset, 0 0 0 1px rgba(169, 182, 52, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'LXGWBright', serif;
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: rgba(169, 182, 52, 0.6);
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: rgba(169, 182, 52, 0.7);
   transform: rotate(12deg);
-  opacity: 0.55;
+  opacity: 0.62;
   pointer-events: none;
   z-index: 10;
-  /* 关键：高于 wl-panel */
+  /* 断墨/印泥不匀：用背景叠层做“脏边”但很克制 */
+  background: radial-gradient(circle at 30% 25%, rgba(169, 182, 52, 0.1), transparent 45%), radial-gradient(circle at 70% 65%, rgba(169, 182, 52, 0.08), transparent 48%), radial-gradient(circle at 55% 40%, rgba(169, 182, 52, 0.06), transparent 52%);
+}
+/* 邮戳内部：两条细横线（像盖章常见的装饰）
+   用伪元素画在邮戳上 */
+#waline.trm-card::after {
+  /* 保持上面定义不变 */
+}
+#waline.trm-card {
+  /* 保证容器不被主题影响（你已有也行） */
+}
+/* 用额外元素画横线：改用 mask 不方便，所以用 outline trick：
+   这里用 text-shadow + background-clip 的方式不稳定，直接再加一层伪元素更稳 */
+#waline.trm-card .wl-panel {
+  /* 不动 */
+}
+/* 新增：在邮戳上叠一层“内横线”，用另一个伪元素实现 */
+#waline.trm-card .wl-panel::before {
+  content: "" !important;
+  position: absolute !important;
+  /* 关键：定位到邮戳区域（跟邮戳 top/right 对齐） */
+  top: -2px !important;
+  right: -2px !important;
+  width: 92px !important;
+  height: 92px !important;
+  pointer-events: none !important;
+  z-index: 11 !important;
+  /* 两条横线 + 轻微断墨 */
+  background: linear-gradient(to right, transparent 10%, rgba(169, 182, 52, 0.45) 18%, rgba(169, 182, 52, 0.45) 82%, transparent 90%), linear-gradient(to right, transparent 14%, rgba(169, 182, 52, 0.3) 22%, rgba(169, 182, 52, 0.3) 78%, transparent 86%);
+  /* 放到文字上下 */
+  background-size: 100% 1px, 100% 1px !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 57%, 0 43% !important;
+  opacity: 0.65 !important;
+  transform: rotate(12deg) !important;
+  /* 跟邮戳角度一致 */
 }
 /* 5. 输入面板 */
 #waline.trm-card .wl-panel {
