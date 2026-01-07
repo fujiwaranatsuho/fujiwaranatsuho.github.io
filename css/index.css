@@ -4153,6 +4153,67 @@ iframe.video-box {
 .img-row::-webkit-scrollbar-track {
   background: transparent;
 }
+/* 让拍立得更像拍立得：底边更厚 + 内边框 + 阴影更明显 */
+.photo.polaroid {
+  background: #fff;
+  padding: 14px 14px 46px;
+  /* 关键：底边更厚 */
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12), 0 2px 0 rgba(255, 255, 255, 0.85) inset;
+  transform: rotate(-1.2deg);
+  /* 角度稍微加大才看得出 */
+  position: relative;
+}
+/* 照片区域不要太圆角，不然“白框”会不明显 */
+.photo.polaroid img {
+  border-radius: 6px;
+  /* 关键：小圆角 */
+}
+/* 内边框，让照片像“贴进去”的 */
+.photo.polaroid::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  bottom: 46px;
+  /* 对应底边厚度 */
+  border: 1px solid rgba(30, 30, 30, 0.06);
+  border-radius: 8px;
+  pointer-events: none;
+}
+/* ===== imgrow：一次一张，横向滑动 ===== */
+.article-content .img-row,
+.article-entry .img-row,
+.post-body .img-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 14px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 10px 2px !important;
+  margin: 1.2rem 0 !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+}
+/* 关键：直接选 figure，不要只选 .photo，避免“包了一层”导致选不中 */
+.article-content .img-row > figure,
+.article-entry .img-row > figure,
+.post-body .img-row > figure {
+  flex: 0 0 100% !important;
+  /* 一次只显示一张 */
+  max-width: 100% !important;
+  scroll-snap-align: start !important;
+}
+/* 图片别被撑坏 */
+.article-content .img-row img,
+.article-entry .img-row img,
+.post-body .img-row img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
