@@ -3739,114 +3739,95 @@ body,
 .article-content {
   font-family: 'LXGWBright', sans-serif !important;
 }
-/* ============================================================
-   1. 基础容器与背景强制覆盖
-   ============================================================ */
-/* 强制主容器背景为粉色，并添加胶带装饰 */
+/* 1. 核心变量覆盖：将绿色修正为你的主页橄榄绿 */
 #waline.trm-card {
-  background: #fff0f6 !important;
-  border: none !important;
+  --waline-theme-color: #a9b634 !important;
+  /* 匹配你主页按钮的草木绿 */
+  --waline-active-color: #8e9a2b !important;
+  --waline-bg-color: #fdfdfb !important;
+  /* 极浅暖白，更有纸质感 */
+  --waline-bg-color-light: #f4f4f0 !important;
+  --waline-border-color: #e5e5e1 !important;
+  --waline-disable-bg: #f8f8f6 !important;
+  --waline-info-color: #888882 !important;
+  --waline-font-size: 15px !important;
+  --waline-white: #fdfdfb !important;
+}
+/* 2. 主容器：文艺留白处理 */
+#waline.trm-card {
+  background: #fdfdfb !important;
+  border: 1px solid #e5e5e1 !important;
+  /* 极细边框 */
+  border-radius: 16px !important;
+  /* 大圆角更有亲和力 */
+  padding: 2.5rem !important;
+  /* 增加内边距，让视觉呼吸 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+  /* 极其轻微的投影 */
+  max-width: 850px;
+  margin: 3rem auto;
+}
+/* 3. 输入面板样式优化 */
+#waline.trm-card .wl-panel {
+  background: #fdfdfb !important;
+  border: 1px solid #e5e5e1 !important;
   border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+#waline.trm-card .wl-panel:focus-within {
+  border-color: #a9b634 !important;
+  box-shadow: 0 0 0 3px rgba(169, 182, 52, 0.1) !important;
+}
+/* 顶部输入项（昵称等） */
+#waline.trm-card .wl-header {
+  border-bottom: 1px solid #f0f0ed !important;
+}
+#waline.trm-card .wl-header input {
+  font-family: 'LXGWBright', serif !important;
+  color: #555 !important;
+}
+/* 编辑器区域 */
+#waline.trm-card textarea#wl-edit.wl-editor {
   padding: 1.5rem !important;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), inset 0 0 10px #ffe6eb !important;
-  position: relative !important;
-  max-width: 800px;
-  margin: 2rem auto;
-}
-/* 装饰胶带 - 增加 z-index 确保它浮在最上层 */
-#waline.trm-card::before,
-#waline.trm-card::after {
-  content: "" !important;
-  position: absolute !important;
-  width: 60px;
-  height: 20px;
-  background: repeating-linear-gradient(-45deg, #ffd6e0, #ffd6e0 5px, #ffc0cb 5px, #ffc0cb 10px) !important;
-  top: -10px;
-  opacity: 0.8;
-  z-index: 99;
-}
-#waline.trm-card::before {
-  left: 12px;
-  transform: rotate(-3deg);
-}
-#waline.trm-card::after {
-  right: 12px;
-  transform: rotate(5deg);
-}
-/* ============================================================
-   2. 输入面板 (wl-panel) 样式修正
-   ============================================================ */
-#waline .wl-panel {
-  background: #fff0f6 !important;
-  /* 确保内部面板也是粉色 */
-  border: 1px dashed #f3b6c1 !important;
-  /* 改为虚线更有手帐感 */
-  border-radius: 8px !important;
-  margin: 10px 0 !important;
-}
-/* 顶部：昵称、邮箱、网址区域 */
-#waline .wl-header {
-  border-bottom: 1px dashed #f3b6c1 !important;
+  line-height: 1.8 !important;
+  /* 增加行高，提升文艺感 */
+  font-family: 'LXGWBright', serif !important;
+  color: #444 !important;
   background: transparent !important;
 }
-#waline .wl-header .wl-header-item label {
-  color: #6b4c4c !important;
-  /* 字体颜色 */
+/* 4. 按钮样式：模仿你主页“联系我”的胶囊样式 */
+#waline.trm-card .wl-btn {
+  border-radius: 50px !important;
+  /* 胶囊圆角 */
+  padding: 8px 24px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
-/* 重点：针对你截图中那个巨大的文本域 textarea#wl-edit.wl-editor */
-#waline textarea#wl-edit.wl-editor {
-  background: transparent !important;
-  color: #6b4c4c !important;
-  padding: 1.5rem !important;
-  font-family: 'LXGWBright', sans-serif !important;
-  min-height: 140px !important;
-  outline: none !important;
-}
-/* ============================================================
-   3. 底部工具栏与按钮 (wl-footer / wl-btn)
-   ============================================================ */
-#waline .wl-footer {
-  background: transparent !important;
-}
-/* 按钮样式覆盖 (绿色 -> 粉色) */
-#waline .wl-btn {
-  border-radius: 6px !important;
-  font-weight: bold !important;
-  transition: all 0.3s ease !important;
-}
-/* 提交按钮具体的颜色覆盖 */
-#waline .wl-btn.wl-btn-primary {
-  background-color: #f3b6c1 !important;
+#waline.trm-card .wl-btn.wl-btn-primary {
+  background: #a9b634 !important;
+  /* 橄榄绿背景 */
   border: none !important;
   color: white !important;
 }
-#waline .wl-btn.wl-btn-primary:hover {
-  background-color: #ff9dbb !important;
-  transform: translateY(-2px);
+#waline.trm-card .wl-btn.wl-btn-primary:hover {
+  background: #8e9a2b !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(169, 182, 52, 0.3) !important;
 }
-/* 登录按钮 */
-#waline .wl-btn:not(.wl-btn-primary) {
-  background: white !important;
-  border: 1px solid #f3b6c1 !important;
-  color: #f3b6c1 !important;
+/* 5. 评论列表卡片 */
+#waline.trm-card .wl-cards .wl-card {
+  border-bottom: 1px solid #f0f0ed !important;
+  padding: 2rem 0 !important;
+  background: transparent !important;
 }
-/* ============================================================
-   4. 评论卡片列表 (wl-cards)
-   ============================================================ */
-#waline .wl-cards .wl-card {
-  background: #ffffff !important;
-  border-radius: 12px !important;
-  margin-top: 15px !important;
-  border: 1px solid #f2f2f2 !important;
-  padding: 15px !important;
-  transition: transform 0.3s ease;
+#waline.trm-card .wl-nick {
+  color: #a9b634 !important;
+  /* 名字也改用草木绿 */
 }
-#waline .wl-cards .wl-card:hover {
-  transform: scale(1.01);
-}
-/* 表情区居中 */
-#waline .wl-reaction-list {
-  justify-content: center !important;
+/* 隐藏一些不必要的繁琐装饰 */
+#waline.trm-card .wl-power {
+  opacity: 0.3;
+  font-size: 12px;
 }
 /* db-card -------- start */
 .db-card {
