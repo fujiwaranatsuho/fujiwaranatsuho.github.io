@@ -3972,10 +3972,10 @@ iframe.video-box {
 }
 /* =========================
    图片短代码：排版 + 装饰
-   支持：polaroid / torn / tape / plain
+   支持：polaroid / torn / tape / torn-tape / plain
    支持：img2 / img3 / imgrow / mosaic
 ========================= */
-/* 基础 */
+/* ---------- 基础 ---------- */
 .photo {
   margin: 0;
 }
@@ -3984,6 +3984,8 @@ iframe.video-box {
   height: auto;
   display: block;
   border-radius: 12px;
+  margin: 0;
+  /* 防主题给 img 加 auto margin */
 }
 .photo figcaption {
   margin-top: 10px;
@@ -3993,22 +3995,18 @@ iframe.video-box {
   letter-spacing: 0.4px;
   line-height: 1.5;
 }
-/* ===== 装饰：拍立得（更明显） ===== */
+/* ---------- polaroid：正的（不倾斜）+ 更明显 ---------- */
 .photo.polaroid {
   background: #fff;
   padding: 14px 14px 52px;
-  /* 底边更厚 */
   border: 1px solid rgba(30, 30, 30, 0.12);
   border-radius: 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
-  transform: rotate(-1.2deg);
   position: relative;
+  transform: none;
 }
 .photo.polaroid img {
   border-radius: 6px;
-  /* 照片本体小圆角，白框更明显 */
-  margin: 0;
-  /* 干掉主题可能给 img 的 auto margin */
 }
 .photo.polaroid::after {
   content: "";
@@ -4021,7 +4019,7 @@ iframe.video-box {
   border-radius: 8px;
   pointer-events: none;
 }
-/* ===== 装饰：手撕纸 ===== */
+/* ---------- torn：手撕纸 ---------- */
 .photo.torn {
   position: relative;
   background: #fff;
@@ -4043,7 +4041,7 @@ iframe.video-box {
   opacity: 0.95;
   pointer-events: none;
 }
-/* ===== 装饰：胶带 ===== */
+/* ---------- tape：双胶带 ---------- */
 .photo.tape {
   position: relative;
   background: #fff;
@@ -4073,7 +4071,55 @@ iframe.video-box {
   right: 18px;
   transform: rotate(7deg);
 }
-/* ===== plain ===== */
+/* ---------- torn-tape：撕边 + 单条胶带（整体效果） ---------- */
+.photo.torn-tape {
+  position: relative;
+  background: #fff;
+  padding: 14px;
+  border: 1px solid rgba(30, 30, 30, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+}
+.photo.torn-tape::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: -8px;
+  height: 18px;
+  background: #fff;
+  border-top: 1px solid rgba(30, 30, 30, 0.06);
+  clip-path: polygon(0% 60%, 6% 40%, 12% 65%, 18% 35%, 24% 62%, 30% 38%, 36% 70%, 42% 40%, 48% 68%, 54% 36%, 60% 66%, 66% 42%, 72% 72%, 78% 44%, 84% 68%, 90% 40%, 96% 64%, 100% 50%, 100% 0%, 0% 0%);
+  opacity: 0.95;
+  pointer-events: none;
+}
+/* 胶带本体（通用） */
+.photo.torn-tape::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  width: 96px;
+  height: 24px;
+  background: rgba(169, 182, 52, 0.18);
+  border: 1px solid rgba(169, 182, 52, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+}
+/* torn-tape：伪随机胶带位置（左/中/右 + 不同角度） */
+:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n+1).torn-tape::after {
+  left: 18px;
+  transform: rotate(-6deg);
+}
+:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n+2).torn-tape::after {
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+}
+:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n).torn-tape::after {
+  right: 18px;
+  transform: rotate(7deg);
+}
+/* ---------- plain ---------- */
 .photo.plain {
   padding: 0;
   border: 0;
@@ -4085,7 +4131,7 @@ iframe.video-box {
   border-radius: 14px;
 }
 /* =========================
-   排版：网格（2/3列）
+   网格（2 / 3 列）
 ========================= */
 .img-grid {
   display: grid;
@@ -4110,7 +4156,7 @@ iframe.video-box {
   }
 }
 /* =========================
-   排版：拼图（mosaic）
+   拼图（mosaic）
 ========================= */
 .img-mosaic {
   display: grid;
@@ -4142,8 +4188,8 @@ iframe.video-box {
   }
 }
 /* =========================
-   排版：imgrow（一次一张，横向滑动）
-   关键：强制覆盖主题样式
+   imgrow：一次一张 · 横向滑动 · 竖图适配
+   （用强选择器覆盖主题）
 ========================= */
 :is(.article-content,.article-entry,.post-body,.trm-publication) .img-row {
   display: flex !important;
@@ -4153,20 +4199,31 @@ iframe.video-box {
   overflow-y: hidden !important;
   padding: 10px 2px !important;
   margin: 1.2rem 0 !important;
+  align-items: center !important;
   scroll-snap-type: x mandatory !important;
   -webkit-overflow-scrolling: touch;
 }
 :is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure {
   flex: 0 0 100% !important;
-  /* 一次只显示一张 */
   max-width: 100% !important;
   margin: 0 !important;
   scroll-snap-align: start !important;
+  display: grid !important;
+  place-items: center !important;
+  max-height: min(78vh, 720px) !important;
 }
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row img {
+/* 关键：竖图不撑爆，完整显示 */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure img {
   width: 100% !important;
-  height: auto !important;
-  display: block !important;
+  max-height: min(66vh, 600px) !important;
+  object-fit: contain !important;
+}
+/* imgrow 内：拍立得底边动态 */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid {
+  padding-bottom: clamp(28px, 6vh, 52px) !important;
+}
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid::after {
+  bottom: clamp(28px, 6vh, 52px) !important;
 }
 /* 滚动条（可选） */
 .img-row::-webkit-scrollbar {
@@ -4178,41 +4235,6 @@ iframe.video-box {
 }
 .img-row::-webkit-scrollbar-track {
   background: transparent;
-}
-/* ===== imgrow：适配不同长宽比，避免竖图把高度撑爆 ===== */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row {
-  align-items: center !important;
-  /* 让每张在容器中垂直居中 */
-}
-/* 让 imgrow 的“单张卡片”高度不要无限增长（你可以调这个值） */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo {
-  max-height: min(78vh, 720px) !important;
-  /* 竖图上限：别把整块撑太高 */
-  display: grid !important;
-  /* 方便把图片居中放在卡片里 */
-  place-items: center !important;
-}
-/* imgrow 里图片：尽量完整显示，不裁切；同时不撑爆高度 */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo img {
-  width: 100% !important;
-  max-height: min(66vh, 600px) !important;
-  /* 图片本体高度上限（可调） */
-  object-fit: contain !important;
-  /* 关键：竖图不再撑爆 */
-  border-radius: inherit;
-}
-/* imgrow 里拍立得：底部留白改为动态，不再固定 52px */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid {
-  padding: 14px !important;
-  padding-bottom: clamp(28px, 6vh, 52px) !important;
-  /* 动态底边 */
-}
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid::after {
-  left: 14px !important;
-  right: 14px !important;
-  top: 14px !important;
-  bottom: clamp(28px, 6vh, 52px) !important;
-  /* 内框跟着底边动 */
 }
 /* db-card -------- start */
 .db-card {
