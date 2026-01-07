@@ -3930,6 +3930,10 @@ body,
   opacity: 0.3;
   font-size: 12px;
 }
+.article-entry iframe.video-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
