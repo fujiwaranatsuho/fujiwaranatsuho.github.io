@@ -3930,20 +3930,21 @@ body,
   opacity: 0.3;
   font-size: 12px;
 }
-/* Bilibili 内嵌播放器 */
-.bili-wrapper {
+/* ===== Bilibili 播放器 · 正文同宽 ===== */
+/* 外层：不要卡宽度 */
+.article-entry .bili-wrapper,
+.article-content .bili-wrapper {
   width: 100%;
   margin: 1.5rem 0;
 }
-.bili-wrapper .video-box {
+/* iframe 本体 */
+.article-entry .video-box,
+.article-content .video-box {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: none;
   display: block;
-  border-radius: 14px;
-  /* 可选：更文艺 */
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  /* 可选 */
+  background: #000;
 }
 /* db-card -------- start */
 .db-card {
