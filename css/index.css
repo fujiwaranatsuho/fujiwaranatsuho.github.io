@@ -4179,6 +4179,41 @@ iframe.video-box {
 .img-row::-webkit-scrollbar-track {
   background: transparent;
 }
+/* ===== imgrow：适配不同长宽比，避免竖图把高度撑爆 ===== */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row {
+  align-items: center !important;
+  /* 让每张在容器中垂直居中 */
+}
+/* 让 imgrow 的“单张卡片”高度不要无限增长（你可以调这个值） */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo {
+  max-height: min(78vh, 720px) !important;
+  /* 竖图上限：别把整块撑太高 */
+  display: grid !important;
+  /* 方便把图片居中放在卡片里 */
+  place-items: center !important;
+}
+/* imgrow 里图片：尽量完整显示，不裁切；同时不撑爆高度 */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo img {
+  width: 100% !important;
+  max-height: min(66vh, 600px) !important;
+  /* 图片本体高度上限（可调） */
+  object-fit: contain !important;
+  /* 关键：竖图不再撑爆 */
+  border-radius: inherit;
+}
+/* imgrow 里拍立得：底部留白改为动态，不再固定 52px */
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid {
+  padding: 14px !important;
+  padding-bottom: clamp(28px, 6vh, 52px) !important;
+  /* 动态底边 */
+}
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid::after {
+  left: 14px !important;
+  right: 14px !important;
+  top: 14px !important;
+  bottom: clamp(28px, 6vh, 52px) !important;
+  /* 内框跟着底边动 */
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
