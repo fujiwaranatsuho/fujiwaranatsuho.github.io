@@ -3946,6 +3946,30 @@ body,
   display: block;
   background: #000;
 }
+/* ===== 强制修复：Bilibili 播放器全宽 16:9（不依赖主题结构） ===== */
+#hexo-blog-encrypt .bili-wrapper,
+#hexo-blog-encrypt .bili-wrapper *,
+.bili-wrapper {
+  max-width: 100% !important;
+}
+/* 关键：外层撑开宽度 */
+.bili-wrapper {
+  display: block !important;
+  width: 100% !important;
+  margin: 1.2rem 0 !important;
+}
+/* 关键：iframe 全宽 + 16:9 */
+.bili-wrapper > iframe.video-box,
+iframe.video-box {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  border: 0 !important;
+  background: #000 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
