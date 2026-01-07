@@ -3739,188 +3739,197 @@ body,
 .article-content {
   font-family: 'LXGWBright', sans-serif !important;
 }
-/* ================================
-   Waline × 文艺清新（适配你主页橄榄绿）
-   作用域：只影响 #waline.trm-card
-================================ */
-/* 0) 全局：字体、色板、留白、纸感 */
+/* 1. 核心变量覆盖：将绿色修正为你的主页橄榄绿 */
 #waline.trm-card {
-  /* 主题色（匹配你主页按钮那种草木橄榄绿） */
   --waline-theme-color: #a9b634 !important;
+  /* 匹配你主页按钮的草木绿 */
   --waline-active-color: #8e9a2b !important;
-  /* 纸感底色：暖白 + 微灰 */
-  --waline-bg-color: #fbfbf6 !important;
-  --waline-bg-color-light: #f3f4ee !important;
-  /* 线条与文字：更“轻”一点 */
-  --waline-border-color: rgba(30, 30, 30, 0.1) !important;
-  --waline-info-color: rgba(30, 30, 30, 0.55) !important;
-  /* 字体与排版 */
+  --waline-bg-color: #fdfdfb !important;
+  /* 极浅暖白，更有纸质感 */
+  --waline-bg-color-light: #f4f4f0 !important;
+  --waline-border-color: #e5e5e1 !important;
+  --waline-disable-bg: #f8f8f6 !important;
+  --waline-info-color: #888882 !important;
   --waline-font-size: 15px !important;
-  font-family: 'LXGWBright', 'Noto Sans SC', 'Helvetica Neue', sans-serif !important;
-  /* 主容器外观 */
-  background: var(--waline-bg-color) !important;
-  border: 1px solid rgba(30, 30, 30, 0.1) !important;
-  border-radius: 18px !important;
-  padding: 2.4rem 2.2rem !important;
-  max-width: 860px;
+  --waline-white: #fdfdfb !important;
+}
+/* 2. 主容器：文艺留白处理 */
+#waline.trm-card {
+  background: #fdfdfb !important;
+  border: 1px solid #e5e5e1 !important;
+  /* 极细边框 */
+  border-radius: 16px !important;
+  /* 大圆角更有亲和力 */
+  padding: 2.5rem !important;
+  /* 增加内边距，让视觉呼吸 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+  /* 极其轻微的投影 */
+  max-width: 850px;
   margin: 3rem auto;
-  /* 轻轻的纸张阴影（别太“卡片化”） */
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.8) inset !important;
-  position: relative !important;
-  overflow: hidden !important;
-  /* 为了装饰不溢出 */
 }
-/* 1) 角落“纸胶带”装饰：轻量、干净（可删） */
-#waline.trm-card::before,
-#waline.trm-card::after {
-  content: "" !important;
-  position: absolute !important;
-  width: 120px !important;
-  height: 28px !important;
-  top: 14px !important;
-  background: rgba(169, 182, 52, 0.18) !important;
-  border: 1px solid rgba(169, 182, 52, 0.2) !important;
-  border-radius: 10px !important;
-  filter: saturate(0.9) !important;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06) !important;
-  pointer-events: none !important;
-}
-#waline.trm-card::before {
-  left: -22px !important;
-  transform: rotate(-8deg) !important;
-}
-#waline.trm-card::after {
-  right: -22px !important;
-  transform: rotate(8deg) !important;
-}
-/* 2) 输入面板：更像“纸页”，聚焦时淡淡发光 */
+/* 3. 输入面板样式优化 */
 #waline.trm-card .wl-panel {
-  background: rgba(255, 255, 255, 0.55) !important;
-  border: 1px solid rgba(30, 30, 30, 0.1) !important;
-  border-radius: 14px !important;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease !important;
+  background: #fdfdfb !important;
+  border: 1px solid #e5e5e1 !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
 }
 #waline.trm-card .wl-panel:focus-within {
-  border-color: rgba(169, 182, 52, 0.55) !important;
-  box-shadow: 0 0 0 4px rgba(169, 182, 52, 0.12) !important;
-  transform: translateY(-1px) !important;
+  border-color: #a9b634 !important;
+  box-shadow: 0 0 0 3px rgba(169, 182, 52, 0.1) !important;
 }
-/* 顶部输入项（昵称/邮箱/网址） */
+/* 顶部输入项（昵称等） */
 #waline.trm-card .wl-header {
-  border-bottom: 1px dashed rgba(30, 30, 30, 0.12) !important;
-  /* 更文艺一点 */
+  border-bottom: 1px solid #f0f0ed !important;
 }
 #waline.trm-card .wl-header input {
-  font-family: 'LXGWBright', 'Noto Sans SC', sans-serif !important;
-  color: rgba(30, 30, 30, 0.7) !important;
+  font-family: 'LXGWBright', serif !important;
+  color: #555 !important;
 }
-#waline.trm-card .wl-header input::placeholder,
-#waline.trm-card textarea::placeholder {
-  color: rgba(30, 30, 30, 0.35) !important;
-}
-/* 编辑器区域：更舒展、更像写字 */
+/* 编辑器区域 */
 #waline.trm-card textarea#wl-edit.wl-editor {
-  padding: 1.3rem 1.4rem !important;
-  line-height: 1.9 !important;
-  font-family: 'LXGWBright', 'Noto Sans SC', sans-serif !important;
-  color: rgba(30, 30, 30, 0.78) !important;
+  padding: 1.5rem !important;
+  line-height: 1.8 !important;
+  /* 增加行高，提升文艺感 */
+  font-family: 'LXGWBright', serif !important;
+  color: #444 !important;
   background: transparent !important;
 }
-/* 3) 主按钮：匹配你主页“联系我”胶囊 */
+/* 4. 按钮样式：模仿你主页“联系我”的胶囊样式 */
 #waline.trm-card .wl-btn {
-  border-radius: 999px !important;
-  padding: 8px 22px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.2px !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease !important;
+  border-radius: 50px !important;
+  /* 胶囊圆角 */
+  padding: 8px 24px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 #waline.trm-card .wl-btn.wl-btn-primary {
   background: #a9b634 !important;
+  /* 橄榄绿背景 */
   border: none !important;
-  color: #fff !important;
-  box-shadow: 0 10px 18px rgba(169, 182, 52, 0.18) !important;
+  color: white !important;
 }
 #waline.trm-card .wl-btn.wl-btn-primary:hover {
   background: #8e9a2b !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 14px 24px rgba(169, 182, 52, 0.26) !important;
+  box-shadow: 0 4px 12px rgba(169, 182, 52, 0.3) !important;
 }
-#waline.trm-card .wl-btn:active {
-  transform: translateY(0px) !important;
-  opacity: 0.92 !important;
-}
-/* 次要按钮：透明 + 细线 */
-#waline.trm-card .wl-btn:not(.wl-btn-primary) {
-  background: transparent !important;
-  border: 1px solid rgba(30, 30, 30, 0.14) !important;
-  color: rgba(30, 30, 30, 0.7) !important;
-}
-#waline.trm-card .wl-btn:not(.wl-btn-primary):hover {
-  border-color: rgba(169, 182, 52, 0.55) !important;
-  color: rgba(30, 30, 30, 0.85) !important;
-}
-/* 4) 评论列表：更干净的分隔与留白 */
+/* 5. 评论列表卡片 */
 #waline.trm-card .wl-cards .wl-card {
-  padding: 1.8rem 0 !important;
+  border-bottom: 1px solid #f0f0ed !important;
+  padding: 2rem 0 !important;
   background: transparent !important;
-  border-bottom: 1px solid rgba(30, 30, 30, 0.08) !important;
 }
-#waline.trm-card .wl-cards .wl-card:last-child {
-  border-bottom: none !important;
-}
-/* 昵称、链接、强调色 */
-#waline.trm-card .wl-nick,
-#waline.trm-card a {
-  color: #8e9a2b !important;
-}
-#waline.trm-card a:hover {
+#waline.trm-card .wl-nick {
   color: #a9b634 !important;
-  text-decoration: none !important;
+  /* 名字也改用草木绿 */
 }
-/* 评论正文：更像“文章排版” */
-#waline.trm-card .wl-content {
-  color: rgba(30, 30, 30, 0.78) !important;
-  line-height: 1.85 !important;
-}
-#waline.trm-card .wl-content p {
-  margin: 0.6em 0 !important;
-}
-/* 5) 一些视觉噪音：更轻 */
+/* 隐藏一些不必要的繁琐装饰 */
 #waline.trm-card .wl-power {
-  opacity: 0.28 !important;
-  font-size: 12px !important;
+  opacity: 0.3;
+  font-size: 12px;
 }
+/* =========================
+   Waline 文艺清新补丁（追加）
+   - 邮戳（右上角）
+   - 纸张细纹质感（极轻）
+   - 评论区细节统一
+========================= */
+/* 0) 让装饰可以定位且不影响布局 */
+#waline.trm-card {
+  position: relative !important;
+  overflow: hidden !important;
+  /* 纸纹不溢出 */
+}
+/* 1) 邮戳（右上角，不挡输入框）
+   你可以把 content 改成：'NOTES' / '留言' / 'natsuho' */
+#waline.trm-card::after {
+  content: "NOTES" !important;
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 92px !important;
+  height: 92px !important;
+  border-radius: 999px !important;
+  /* 章：双圈 + 虚线，显得更“印章” */
+  border: 2px dashed rgba(169, 182, 52, 0.55) !important;
+  box-shadow: 0 0 0 2px rgba(169, 182, 52, 0.18) inset !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'LXGWBright', serif !important;
+  font-size: 16px !important;
+  letter-spacing: 2px !important;
+  color: rgba(169, 182, 52, 0.6) !important;
+  transform: rotate(12deg) !important;
+  opacity: 0.55 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  /* 装饰在底层 */
+}
+/* 关键：把输入框面板提到邮戳上层，避免“盖住输入框”的错觉 */
+#waline.trm-card .wl-panel,
+#waline.trm-card .wl-cards {
+  position: relative !important;
+  z-index: 2 !important;
+}
+/* 2) 纸张细纹 / 颗粒感（非常轻，文艺感来自这里）
+   如果你觉得“有点脏”，把 opacity 调到 0.15 */
+#waline.trm-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(circle at 20% 10%, rgba(169, 182, 52, 0.08), rgba(0, 0, 0, 0) 35%), radial-gradient(circle at 80% 30%, rgba(169, 182, 52, 0.06), rgba(0, 0, 0, 0) 40%), repeating-linear-gradient(0deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 12px, rgba(30, 30, 30, 0.015) 13px) !important;
+  opacity: 0.22 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+/* 3) 评论区“章节线”效果：更像杂志排版 */
+#waline.trm-card .wl-count {
+  position: relative !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 14px !important;
+}
+#waline.trm-card .wl-count::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(to right, rgba(169, 182, 52, 0), rgba(169, 182, 52, 0.35), rgba(169, 182, 52, 0)) !important;
+  opacity: 0.9 !important;
+}
+/* 4) 时间/元信息更“轻”，与主页气质一致 */
 #waline.trm-card .wl-meta,
-#waline.trm-card .wl-time {
-  color: rgba(30, 30, 30, 0.45) !important;
+#waline.trm-card .wl-time,
+#waline.trm-card .wl-like,
+#waline.trm-card .wl-reply {
+  color: rgba(30, 30, 30, 0.5) !important;
 }
-/* 6) 深色模式：不刺眼的“灰蓝纸感” */
+/* 5) 排序按钮更“清爽”，选中态用橄榄绿 */
+#waline.trm-card .wl-sort li {
+  color: rgba(30, 30, 30, 0.55) !important;
+}
+#waline.trm-card .wl-sort li.active {
+  color: #8e9a2b !important;
+  font-weight: 600 !important;
+}
+/* 6) 评论分隔线更柔和一点（你原来是实线，这里更“纸感”）
+   如果你不想动分隔线，可删掉这一段 */
+#waline.trm-card .wl-cards .wl-card {
+  border-bottom: 1px solid rgba(30, 30, 30, 0.07) !important;
+}
+/* 7) 深色模式：邮戳和纸纹也别太亮（可选） */
 @media (prefers-color-scheme: dark) {
-  #waline.trm-card {
-    --waline-bg-color: rgba(20, 22, 24, 0.78) !important;
-    --waline-bg-color-light: rgba(255, 255, 255, 0.06) !important;
-    --waline-border-color: rgba(255, 255, 255, 0.12) !important;
-    --waline-info-color: rgba(255, 255, 255, 0.55) !important;
-    background: var(--waline-bg-color) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
+  #waline.trm-card::before {
+    opacity: 0.1 !important;
   }
-  #waline.trm-card .wl-panel {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-  }
-  #waline.trm-card textarea#wl-edit.wl-editor,
-  #waline.trm-card .wl-content {
-    color: rgba(255, 255, 255, 0.82) !important;
-  }
-  #waline.trm-card .wl-btn:not(.wl-btn-primary) {
-    color: rgba(255, 255, 255, 0.75) !important;
-    border-color: rgba(255, 255, 255, 0.16) !important;
-  }
-  #waline.trm-card::before,
   #waline.trm-card::after {
-    background: rgba(169, 182, 52, 0.14) !important;
-    border-color: rgba(169, 182, 52, 0.18) !important;
+    border-color: rgba(169, 182, 52, 0.4) !important;
+    box-shadow: 0 0 0 2px rgba(169, 182, 52, 0.12) inset !important;
+    color: rgba(169, 182, 52, 0.52) !important;
+    opacity: 0.45 !important;
   }
 }
 /* db-card -------- start */
