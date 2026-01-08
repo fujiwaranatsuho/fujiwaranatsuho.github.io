@@ -4016,30 +4016,43 @@ iframe.video-box {
   letter-spacing: 0.4px;
   line-height: 1.5;
 }
-/* --- 拍立得基础样式（单图/多图通用选择器） --- */
+/* ============================================================
+   2. 拍立得核心容器 (.photo.polaroid)
+   ============================================================ */
 .photo.polaroid {
-  background: #fff;
-  /* 还原 22px 边距。底部 padding 设为 60px，确保没有手写字的多图排版也有拍立得底边 */
-  padding: 22px 22px 60px;
-  border: 1px solid rgba(30, 30, 30, 0.12);
-  border-radius: 18px;
-  /* 还原 18px */
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+  /* 仿真质感：微暖的相纸白渐变 */
+  background: linear-gradient(135deg, #ffffff 0%, #fbfbfb 100%);
+  /* 还原您的 22px 边距 */
+  padding: 22px 22px 50px;
+  /* 底部 50px 保证了 imgrow 等多图排版的基础留白 */
+  margin: 2.5rem auto;
+  /* 极淡的边缘，模拟相纸厚度 */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  /* 物理投影：第一层近影，第二层柔和远影 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 15px 35px rgba(0, 0, 0, 0.12);
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s;
+  max-width: fit-content;
+  box-sizing: border-box;
 }
-/* --- 内框线效果 --- */
-.photo.polaroid img,
+/* ============================================================
+   3. 照片主体与“下陷感”处理
+   ============================================================ */
+.photo.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  /* 图片圆角略小于外框，更写实 */
+}
+/* 移除灰色线条，改用内阴影模拟照片嵌入感 */
 .photo.polaroid .img-inner-wrapper {
   position: relative;
-  border-radius: 10px;
-  /* 还原 10px */
-  display: block;
+  overflow: hidden;
+  border-radius: 6px;
 }
-/* 还原你原来的内框线逻辑 */
-.photo.polaroid img::after,
 .photo.polaroid .img-inner-wrapper::after {
   content: "";
   position: absolute;
@@ -4047,38 +4060,49 @@ iframe.video-box {
   left: 0;
   right: 0;
   bottom: 0;
-  border: 1px solid rgba(30, 30, 30, 0.07);
-  border-radius: 10px;
+  /* 核心：极其微弱的向内阴影，增加物理深度 */
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
   pointer-events: none;
 }
-.photo.polaroid img {
-  width: 100%;
-  height: auto;
-}
-/* --- 动态手写签名（单图特有） --- */
+/* ============================================================
+   4. 手写签名 (Handwritten Note) - 动态高度支持
+   ============================================================ */
 .photo.polaroid .handwritten-note {
-  margin-top: 15px;
-  text-align: right;
+  margin-top: 18px;
+  /* 照片与文字的间距 */
   padding-right: 5px;
-  /* 文字如果很多，会向下撑开 .photo.polaroid 的高度 */
+  /* 签名靠右微调 */
+  text-align: right;
+  min-height: 40px;
+  /* 基础高度 */
+  /* 字体设置：相思体优先，Caveat 补位 */
   font-family: 'PingFangXiangSi', 'Caveat', cursive;
-  font-size: 22px;
+  font-size: 23px;
+  /* 平方相思体笔画细，23px 视觉效果最好 */
   line-height: 1.3;
-  color: rgba(30, 30, 30, 0.65);
-  transform: rotate(-1.5deg);
+  /* 墨水色彩：深蓝偏黑 (模拟签字笔墨水感) */
+  color: #232121;
+  /* 仿真手写：轻微倾斜 */
+  transform: rotate(-1.2deg);
+  /* 支持 \n 换行与自动折行 */
   white-space: pre-wrap;
   word-wrap: break-word;
+  z-index: 10;
 }
-/* 如果有手写字，减少底部 padding，改由文字撑起空间 */
+/* 如果存在手写字，则收紧容器底部 padding，让文字撑起白边 */
 .photo.polaroid:has(.handwritten-note) {
   padding-bottom: 20px;
 }
-/* --- 标题样式 --- */
+/* ============================================================
+   5. 底部标题 (Caption)
+   ============================================================ */
 .photo.polaroid figcaption {
-  margin-top: 10px;
+  margin-top: 15px;
   text-align: center;
-  font-size: 14px;
-  color: #999;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  letter-spacing: 0.5px;
 }
 /* =========================
    torn：更明显的撕边（上沿）
