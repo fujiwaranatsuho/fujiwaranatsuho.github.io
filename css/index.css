@@ -3975,11 +3975,10 @@ iframe.video-box {
    样式：polaroid / torn / tape / torn-tape / plain
    排版：img2 / img3 / imgrow / mosaic
 ========================= */
-/* =========================
-   基础
-========================= */
+/* 基础 */
 .photo {
   margin: 0;
+  position: relative;
 }
 .photo img {
   width: 100%;
@@ -3996,7 +3995,7 @@ iframe.video-box {
   line-height: 1.5;
 }
 /* =========================
-   拍立得：不倾斜，底边更厚
+   polaroid：不倾斜
 ========================= */
 .photo.polaroid {
   background: #fff;
@@ -4004,7 +4003,6 @@ iframe.video-box {
   border: 1px solid rgba(30, 30, 30, 0.12);
   border-radius: 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
-  position: relative;
   transform: none;
 }
 .photo.polaroid img {
@@ -4022,201 +4020,151 @@ iframe.video-box {
   pointer-events: none;
 }
 /* =========================
-   手撕纸：撕边更明显
+   torn：更明显的撕边（上沿）
 ========================= */
-.photo.torn {
-  position: relative;
-  background: #fff;
-  padding: 14px;
-  border: 1px solid rgba(30, 30, 30, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-  overflow: visible;
-}
-.photo.torn::before {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  top: -10px;
-  height: 22px;
-  background: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  clip-path: polygon(0% 55%, 4% 35%, 8% 60%, 12% 30%, 16% 62%, 20% 34%, 24% 68%, 28% 36%, 32% 70%, 36% 34%, 40% 68%, 44% 38%, 48% 72%, 52% 40%, 56% 70%, 60% 36%, 64% 66%, 68% 42%, 72% 74%, 76% 46%, 80% 70%, 84% 40%, 88% 66%, 92% 44%, 96% 62%, 100% 50%, 100% 0%, 0% 0%);
-  opacity: 0.98;
-  pointer-events: none;
-  z-index: 3;
-}
-/* =========================
-   胶带：通用材质（更仿真）
-   - 纤维纹理 + 透明层 + 轻微“压痕”阴影
-   - 边缘不规则 clip-path
-========================= */
-:root {
-  --tape-bg: linear-gradient(0deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.04) 0 2px, rgba(0,0,0,0) 2px 6px),
-    rgba(169,182,52,.20);
-  --tape-clip: polygon(0% 18%, 6% 6%, 14% 12%, 22% 4%, 30% 10%, 38% 6%, 46% 12%, 54% 4%, 62% 10%, 70% 6%, 78% 12%, 86% 4%, 94% 10%, 100% 18%, 100% 82%, 94% 94%, 86% 88%, 78% 96%, 70% 90%, 62% 94%, 54% 88%, 46% 96%, 38% 90%, 30% 94%, 22% 88%, 14% 96%, 6% 90%, 0% 82%);
-}
-/* =========================
-   tape：两条胶带（贴在边框外沿，不压进图里）
-========================= */
-.photo.tape {
-  position: relative;
-  background: #fff;
-  padding: 12px;
-  border: 1px solid rgba(30, 30, 30, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-  overflow: visible;
-}
-/* 关键：胶带要“压在边框上”，所以 top 用负值但不太大；并且左右不要靠太内 */
-.photo.tape::before,
-.photo.tape::after {
-  content: "";
-  position: absolute;
-  width: 112px;
-  height: 26px;
-  /* 材质 */
-  background: var(--tape-bg);
-  border: 1px solid rgba(30, 30, 30, 0.08);
-  border-radius: 8px;
-  clip-path: var(--tape-clip);
-  /* 更像贴上去：上层阴影 + 轻微压痕 */
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.55) inset;
-  opacity: 0.95;
-  pointer-events: none;
-  z-index: 4;
-  /* 默认贴上沿外侧一点点 */
-  top: -14px;
-}
-/* 左/右两条：稍微跨过边框 */
-.photo.tape::before {
-  left: 10px;
-  transform: rotate(-12deg);
-}
-.photo.tape::after {
-  right: 10px;
-  transform: rotate(12deg);
-}
-/* tape 的“伪随机细调”（只调一点点，保持真实） */
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+1)::before {
-  left: 8px;
-  transform: rotate(-14deg);
-}
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+2)::before {
-  left: 18px;
-  transform: rotate(-10deg);
-}
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+3)::before {
-  left: 12px;
-  transform: rotate(-16deg);
-}
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+1)::after {
-  right: 12px;
-  transform: rotate(14deg);
-}
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+2)::after {
-  right: 8px;
-  transform: rotate(10deg);
-}
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.tape:nth-child(3n+3)::after {
-  right: 16px;
-  transform: rotate(16deg);
-}
-/* =========================
-   torn-tape：撕边 + 单条胶带（四角伪随机）
-   重点：胶带贴在“边框角落”，而不是贴到图片里面
-========================= */
+.photo.torn,
 .photo.torn-tape {
-  position: relative;
   background: #fff;
   padding: 14px;
   border: 1px solid rgba(30, 30, 30, 0.1);
   border-radius: 16px;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
   overflow: visible;
+  /* 允许撕边/胶带露出 */
 }
-/* 撕边（同 torn） */
+.photo.torn::before,
 .photo.torn-tape::before {
   content: "";
   position: absolute;
   left: 12px;
   right: 12px;
-  top: -10px;
-  height: 22px;
+  top: -12px;
+  /* 往外一点 */
+  height: 24px;
   background: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  clip-path: polygon(0% 55%, 4% 35%, 8% 60%, 12% 30%, 16% 62%, 20% 34%, 24% 68%, 28% 36%, 32% 70%, 36% 34%, 40% 68%, 44% 38%, 48% 72%, 52% 40%, 56% 70%, 60% 36%, 64% 66%, 68% 42%, 72% 74%, 76% 46%, 80% 70%, 84% 40%, 88% 66%, 92% 44%, 96% 62%, 100% 50%, 100% 0%, 0% 0%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
   opacity: 0.98;
   pointer-events: none;
   z-index: 3;
+  clip-path: polygon(0% 58%, 4% 34%, 8% 62%, 12% 28%, 16% 66%, 20% 32%, 24% 70%, 28% 34%, 32% 74%, 36% 30%, 40% 70%, 44% 38%, 48% 76%, 52% 40%, 56% 72%, 60% 36%, 64% 70%, 68% 44%, 72% 78%, 76% 46%, 80% 74%, 84% 42%, 88% 70%, 92% 46%, 96% 64%, 100% 52%, 100% 0%, 0% 0%);
 }
-/* 胶带：默认值（会被 nth-child 四角覆盖） */
+/* =========================
+   胶带：贴在边框外侧（更仿真）
+   做成“单条胶带”，位置由 nth-child 分配到不同角
+========================= */
+.photo.tape,
 .photo.torn-tape {
-  --tt-top: -14px;
-  --tt-left: 10px;
-  --tt-right: auto;
-  --tt-bottom: auto;
-  --tt-rot: -12deg;
-  --tt-w: 124px;
+  --tape-w: 118px;
+  --tape-h: 30px;
+  --tape-out: 18px;
+  /* 呲出外面的程度（你要更外就加大到 22~26） */
+  --tape-rot: -12deg;
+  --tape-x: calc(-1 * var(--tape-out));
+  --tape-y: calc(-1 * var(--tape-out));
 }
 /* 胶带本体 */
+.photo.tape::after,
 .photo.torn-tape::after {
   content: "";
   position: absolute;
-  width: var(--tt-w);
-  height: 26px;
-  background: var(--tape-bg);
-  border: 1px solid rgba(30, 30, 30, 0.08);
-  border-radius: 8px;
-  clip-path: var(--tape-clip);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.55) inset;
-  opacity: 0.95;
+  width: var(--tape-w);
+  height: var(--tape-h);
+  z-index: 5;
   pointer-events: none;
-  z-index: 4;
-  top: var(--tt-top);
-  left: var(--tt-left);
-  right: var(--tt-right);
-  bottom: var(--tt-bottom);
-  transform: rotate(var(--tt-rot));
+  /* 纸胶带：半透明 + 纤维纹理 + 轻微脏边 */
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 7px), rgba(169, 182, 52, 0.22);
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  border-radius: 7px;
+  box-shadow: 0 14px 22px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+  /* 边缘不规则 */
+  clip-path: polygon(0% 18%, 6% 6%, 14% 12%, 22% 4%, 30% 10%, 38% 6%, 46% 12%, 54% 4%, 62% 10%, 70% 6%, 78% 12%, 86% 4%, 94% 10%, 100% 18%, 100% 82%, 94% 94%, 86% 88%, 78% 96%, 70% 90%, 62% 94%, 54% 88%, 46% 96%, 38% 90%, 30% 94%, 22% 88%, 14% 96%, 6% 90%, 0% 82%);
+  transform: rotate(var(--tape-rot));
+  transform-origin: 50% 50%;
+  opacity: 0.95;
 }
-/* ✅ torn-tape 四角伪随机分配（同一篇文章不同图片位置不一样） */
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.torn-tape:nth-child(4n+1) {
+/* 默认：左上角 */
+.photo.tape::after,
+.photo.torn-tape::after {
+  top: var(--tape-y);
+  left: var(--tape-x);
+}
+/* =========================
+   “伪随机角落”：不同图片分配不同角（网格/拼图/横滑都生效）
+   你要更随机：把 6n 改 8n 并多写几组即可
+========================= */
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+1),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+1) {
+  --tape-rot: -14deg;
+  --tape-w: 122px;
+  --tape-out: 20px;
   /* 左上 */
-  --tt-top: -14px;
-  --tt-left: 10px;
-  --tt-right: auto;
-  --tt-bottom: auto;
-  --tt-rot: -14deg;
-  --tt-w: 126px;
+  --tape-x: calc(-1 * var(--tape-out));
+  --tape-y: calc(-1 * var(--tape-out));
 }
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.torn-tape:nth-child(4n+2) {
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+2),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+2) {
+  --tape-rot: 12deg;
+  --tape-w: 114px;
+  --tape-out: 20px;
   /* 右上 */
-  --tt-top: -14px;
-  --tt-left: auto;
-  --tt-right: 10px;
-  --tt-bottom: auto;
-  --tt-rot: 12deg;
-  --tt-w: 118px;
 }
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.torn-tape:nth-child(4n+3) {
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+2)::after,
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+2)::after {
+  top: calc(-1 * var(--tape-out));
+  right: calc(-1 * var(--tape-out));
+  left: auto;
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+3),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+3) {
+  --tape-rot: -10deg;
+  --tape-w: 126px;
+  --tape-out: 22px;
   /* 左下 */
-  --tt-top: auto;
-  --tt-left: 10px;
-  --tt-right: auto;
-  --tt-bottom: -14px;
-  --tt-rot: 10deg;
-  --tt-w: 120px;
 }
-:is(.img-grid,.img-row,.img-mosaic) > figure.photo.torn-tape:nth-child(4n+4) {
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+3)::after,
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+3)::after {
+  bottom: calc(-1 * var(--tape-out));
+  left: calc(-1 * var(--tape-out));
+  top: auto;
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+4),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+4) {
+  --tape-rot: 14deg;
+  --tape-w: 118px;
+  --tape-out: 22px;
   /* 右下 */
-  --tt-top: auto;
-  --tt-left: auto;
-  --tt-right: 10px;
-  --tt-bottom: -14px;
-  --tt-rot: -10deg;
-  --tt-w: 128px;
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+4)::after,
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+4)::after {
+  bottom: calc(-1 * var(--tape-out));
+  right: calc(-1 * var(--tape-out));
+  left: auto;
+  top: auto;
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+5),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+5) {
+  --tape-rot: -16deg;
+  --tape-w: 110px;
+  --tape-out: 18px;
+  /* 上边偏中（更像随手贴） */
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+5)::after,
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+5)::after {
+  top: calc(-1 * var(--tape-out));
+  left: 18%;
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+6),
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+6) {
+  --tape-rot: 16deg;
+  --tape-w: 112px;
+  --tape-out: 18px;
+  /* 下边偏中 */
+}
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.tape:nth-child(6n+6)::after,
+:is(.img-grid,.img-mosaic,.img-row) > figure.photo.torn-tape:nth-child(6n+6)::after {
+  bottom: calc(-1 * var(--tape-out));
+  left: 52%;
+  top: auto;
 }
 /* =========================
    plain
