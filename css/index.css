@@ -3972,10 +3972,9 @@ iframe.video-box {
 }
 /* =========================
    图片短代码：排版 + 装饰
-   支持：polaroid / torn / tape / torn-tape / plain
-   支持：img2 / img3 / imgrow / mosaic
+   样式：polaroid / torn / tape / torn-tape / plain
+   排版：img2 / img3 / imgrow / mosaic
 ========================= */
-/* ---------- 基础 ---------- */
 .photo {
   margin: 0;
 }
@@ -3984,8 +3983,6 @@ iframe.video-box {
   height: auto;
   display: block;
   border-radius: 12px;
-  margin: 0;
-  /* 防主题给 img 加 auto margin */
 }
 .photo figcaption {
   margin-top: 10px;
@@ -3995,18 +3992,19 @@ iframe.video-box {
   letter-spacing: 0.4px;
   line-height: 1.5;
 }
-/* ---------- polaroid：正的（不倾斜）+ 更明显 ---------- */
+/* ===== 拍立得：不倾斜，底边更厚更像 ===== */
 .photo.polaroid {
   background: #fff;
-  padding: 14px 14px 52px;
+  padding: 14px 14px 54px;
   border: 1px solid rgba(30, 30, 30, 0.12);
   border-radius: 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
   position: relative;
   transform: none;
+  /* 不倾斜 */
 }
 .photo.polaroid img {
-  border-radius: 6px;
+  border-radius: 8px;
 }
 .photo.polaroid::after {
   content: "";
@@ -4014,124 +4012,163 @@ iframe.video-box {
   left: 14px;
   right: 14px;
   top: 14px;
-  bottom: 52px;
-  border: 1px solid rgba(30, 30, 30, 0.06);
-  border-radius: 8px;
+  bottom: 54px;
+  border: 1px solid rgba(30, 30, 30, 0.07);
+  border-radius: 10px;
   pointer-events: none;
 }
-/* ---------- torn：手撕纸 ---------- */
+/* ===== 手撕纸：上沿更明显（不要太克制） ===== */
 .photo.torn {
   position: relative;
   background: #fff;
   padding: 14px;
-  border: 1px solid rgba(30, 30, 30, 0.08);
+  border: 1px solid rgba(30, 30, 30, 0.1);
   border-radius: 16px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+  /* 允许撕边露出来 */
 }
 .photo.torn::before {
   content: "";
   position: absolute;
-  left: 10px;
-  right: 10px;
-  top: -8px;
-  height: 18px;
+  left: 12px;
+  right: 12px;
+  top: -10px;
+  height: 22px;
   background: #fff;
-  border-top: 1px solid rgba(30, 30, 30, 0.06);
-  clip-path: polygon(0% 60%, 6% 40%, 12% 65%, 18% 35%, 24% 62%, 30% 38%, 36% 70%, 42% 40%, 48% 68%, 54% 36%, 60% 66%, 66% 42%, 72% 72%, 78% 44%, 84% 68%, 90% 40%, 96% 64%, 100% 50%, 100% 0%, 0% 0%);
-  opacity: 0.95;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  clip-path: polygon(0% 55%, 4% 35%, 8% 60%, 12% 30%, 16% 62%, 20% 34%, 24% 68%, 28% 36%, 32% 70%, 36% 34%, 40% 68%, 44% 38%, 48% 72%, 52% 40%, 56% 70%, 60% 36%, 64% 66%, 68% 42%, 72% 74%, 76% 46%, 80% 70%, 84% 40%, 88% 66%, 92% 44%, 96% 62%, 100% 50%, 100% 0%, 0% 0%);
+  opacity: 0.98;
   pointer-events: none;
+  z-index: 3;
 }
-/* ---------- tape：双胶带 ---------- */
+/* ===== 胶带：更“手帐”，斜贴 + 纤维纹理 + 边缘不规则 ===== */
 .photo.tape {
   position: relative;
   background: #fff;
   padding: 12px;
-  border: 1px solid rgba(30, 30, 30, 0.08);
+  border: 1px solid rgba(30, 30, 30, 0.1);
   border-radius: 16px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 .photo.tape::before,
 .photo.tape::after {
   content: "";
   position: absolute;
-  top: -10px;
-  width: 88px;
-  height: 22px;
-  background: rgba(169, 182, 52, 0.16);
-  border: 1px solid rgba(169, 182, 52, 0.2);
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  top: -12px;
+  width: 96px;
+  height: 26px;
+  /* 半透明胶带 + 轻纹理（不指定具体颜色也可以，但你想要橄榄绿就保留） */
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.04) 0 2px, rgba(0, 0, 0, 0) 2px 6px), rgba(169, 182, 52, 0.2);
+  border: 1px solid rgba(30, 30, 30, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+  opacity: 0.95;
   pointer-events: none;
+  z-index: 4;
+  /* 边缘不规则一点 */
+  clip-path: polygon(0% 18%, 6% 6%, 14% 12%, 22% 4%, 30% 10%, 38% 6%, 46% 12%, 54% 4%, 62% 10%, 70% 6%, 78% 12%, 86% 4%, 94% 10%, 100% 18%, 100% 82%, 94% 94%, 86% 88%, 78% 96%, 70% 90%, 62% 94%, 54% 88%, 46% 96%, 38% 90%, 30% 94%, 22% 88%, 14% 96%, 6% 90%, 0% 82%);
 }
 .photo.tape::before {
   left: 18px;
-  transform: rotate(-7deg);
+  transform: rotate(-10deg);
 }
 .photo.tape::after {
   right: 18px;
-  transform: rotate(7deg);
+  transform: rotate(10deg);
 }
-/* ---------- torn-tape：撕边 + 单条胶带（整体效果） ---------- */
+/* “伪随机”：每张图胶带角度/位置换一套（循环） */
+.img-grid > figure.photo.tape:nth-child(3n+1)::before {
+  left: 14px;
+  transform: rotate(-12deg);
+}
+.img-grid > figure.photo.tape:nth-child(3n+2)::before {
+  left: 24px;
+  transform: rotate(-8deg);
+}
+.img-grid > figure.photo.tape:nth-child(3n+3)::before {
+  left: 10px;
+  transform: rotate(-14deg);
+}
+.img-grid > figure.photo.tape:nth-child(3n+1)::after {
+  right: 10px;
+  transform: rotate(12deg);
+}
+.img-grid > figure.photo.tape:nth-child(3n+2)::after {
+  right: 22px;
+  transform: rotate(8deg);
+}
+.img-grid > figure.photo.tape:nth-child(3n+3)::after {
+  right: 14px;
+  transform: rotate(14deg);
+}
+/* ===== torn-tape：组合效果（同一张图同时有撕边+胶带）===== */
 .photo.torn-tape {
+  /* 继承 torn 的主体质感 */
   position: relative;
   background: #fff;
   padding: 14px;
-  border: 1px solid rgba(30, 30, 30, 0.08);
+  border: 1px solid rgba(30, 30, 30, 0.1);
   border-radius: 16px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  overflow: visible;
 }
 .photo.torn-tape::before {
+  /* 撕边（同 torn） */
   content: "";
   position: absolute;
-  left: 10px;
-  right: 10px;
-  top: -8px;
-  height: 18px;
+  left: 12px;
+  right: 12px;
+  top: -10px;
+  height: 22px;
   background: #fff;
-  border-top: 1px solid rgba(30, 30, 30, 0.06);
-  clip-path: polygon(0% 60%, 6% 40%, 12% 65%, 18% 35%, 24% 62%, 30% 38%, 36% 70%, 42% 40%, 48% 68%, 54% 36%, 60% 66%, 66% 42%, 72% 72%, 78% 44%, 84% 68%, 90% 40%, 96% 64%, 100% 50%, 100% 0%, 0% 0%);
-  opacity: 0.95;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  clip-path: polygon(0% 55%, 4% 35%, 8% 60%, 12% 30%, 16% 62%, 20% 34%, 24% 68%, 28% 36%, 32% 70%, 36% 34%, 40% 68%, 44% 38%, 48% 72%, 52% 40%, 56% 70%, 60% 36%, 64% 66%, 68% 42%, 72% 74%, 76% 46%, 80% 70%, 84% 40%, 88% 66%, 92% 44%, 96% 62%, 100% 50%, 100% 0%, 0% 0%);
+  opacity: 0.98;
   pointer-events: none;
+  z-index: 3;
 }
-/* 胶带本体（通用） */
+/* 胶带用额外两层伪元素（after + 一个内层 shadow 通过 background 叠加） */
 .photo.torn-tape::after {
   content: "";
   position: absolute;
   top: -12px;
-  width: 96px;
-  height: 24px;
-  background: rgba(169, 182, 52, 0.18);
-  border: 1px solid rgba(169, 182, 52, 0.22);
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-  pointer-events: none;
-}
-/* torn-tape：伪随机胶带位置（左/中/右 + 不同角度） */
-:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n+1).torn-tape::after {
   left: 18px;
-  transform: rotate(-6deg);
+  width: 110px;
+  height: 28px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.04) 0 2px, rgba(0, 0, 0, 0) 2px 6px), rgba(169, 182, 52, 0.2);
+  border: 1px solid rgba(30, 30, 30, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 4;
+  transform: rotate(-12deg);
+  clip-path: polygon(0% 18%, 6% 6%, 14% 12%, 22% 4%, 30% 10%, 38% 6%, 46% 12%, 54% 4%, 62% 10%, 70% 6%, 78% 12%, 86% 4%, 94% 10%, 100% 18%, 100% 82%, 94% 94%, 86% 88%, 78% 96%, 70% 90%, 62% 94%, 54% 88%, 46% 96%, 38% 90%, 30% 94%, 22% 88%, 14% 96%, 6% 90%, 0% 82%);
 }
-:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n+2).torn-tape::after {
-  left: 50%;
-  transform: translateX(-50%) rotate(2deg);
+/* torn-tape 的“伪随机” */
+.img-grid > figure.photo.torn-tape:nth-child(3n+2)::after {
+  left: 28px;
+  transform: rotate(-8deg);
+  width: 118px;
 }
-:is(.img-row,.img-grid,.img-mosaic) > figure:nth-child(3n).torn-tape::after {
-  right: 18px;
-  transform: rotate(7deg);
+.img-grid > figure.photo.torn-tape:nth-child(3n+3)::after {
+  left: 12px;
+  transform: rotate(-14deg);
+  width: 104px;
 }
-/* ---------- plain ---------- */
+/* ===== plain ===== */
 .photo.plain {
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
-  transform: none;
 }
 .photo.plain img {
   border-radius: 14px;
 }
 /* =========================
-   网格（2 / 3 列）
+   网格（2/3列）
 ========================= */
 .img-grid {
   display: grid;
@@ -4188,8 +4225,7 @@ iframe.video-box {
   }
 }
 /* =========================
-   imgrow：一次一张 · 横向滑动 · 竖图适配
-   （用强选择器覆盖主题）
+   imgrow：一次一张，横向滑动 + 竖图不撑爆
 ========================= */
 :is(.article-content,.article-entry,.post-body,.trm-publication) .img-row {
   display: flex !important;
@@ -4199,9 +4235,9 @@ iframe.video-box {
   overflow-y: hidden !important;
   padding: 10px 2px !important;
   margin: 1.2rem 0 !important;
-  align-items: center !important;
   scroll-snap-type: x mandatory !important;
   -webkit-overflow-scrolling: touch;
+  align-items: center !important;
 }
 :is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure {
   flex: 0 0 100% !important;
@@ -4212,18 +4248,11 @@ iframe.video-box {
   place-items: center !important;
   max-height: min(78vh, 720px) !important;
 }
-/* 关键：竖图不撑爆，完整显示 */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure img {
+:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row img {
   width: 100% !important;
   max-height: min(66vh, 600px) !important;
   object-fit: contain !important;
-}
-/* imgrow 内：拍立得底边动态 */
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid {
-  padding-bottom: clamp(28px, 6vh, 52px) !important;
-}
-:is(.article-content,.article-entry,.post-body,.trm-publication) .img-row > figure.photo.polaroid::after {
-  bottom: clamp(28px, 6vh, 52px) !important;
+  display: block !important;
 }
 /* 滚动条（可选） */
 .img-row::-webkit-scrollbar {
