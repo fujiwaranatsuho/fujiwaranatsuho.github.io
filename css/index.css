@@ -3739,6 +3739,28 @@ body,
 .article-content {
   font-family: 'LXGWBright', sans-serif !important;
 }
+/* 1. 引入英文手写字体 Caveat */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjfJ9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+/* 2. 引入你下载的中文字体：平方相思体 */
+@font-face {
+  font-family: 'PingFangXiangSi';
+  src: url('../../fonts/平方相思体.ttf');
+  /* 请根据你实际的文件路径和后缀名修改 */
+  font-display: swap;
+}
 /* 1. 核心变量覆盖 */
 #waline.trm-card {
   --waline-theme-color: #a9b634;
@@ -3994,30 +4016,69 @@ iframe.video-box {
   letter-spacing: 0.4px;
   line-height: 1.5;
 }
-/* =========================
-   polaroid：不倾斜
-========================= */
+/* --- 拍立得基础样式（单图/多图通用选择器） --- */
 .photo.polaroid {
   background: #fff;
-  padding: 14px 14px 54px;
+  /* 还原 22px 边距。底部 padding 设为 60px，确保没有手写字的多图排版也有拍立得底边 */
+  padding: 22px 22px 60px;
   border: 1px solid rgba(30, 30, 30, 0.12);
   border-radius: 18px;
+  /* 还原 18px */
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
-  transform: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
 }
-.photo.polaroid img {
-  border-radius: 8px;
+/* --- 内框线效果 --- */
+.photo.polaroid img,
+.photo.polaroid .img-inner-wrapper {
+  position: relative;
+  border-radius: 10px;
+  /* 还原 10px */
+  display: block;
 }
-.photo.polaroid::after {
+/* 还原你原来的内框线逻辑 */
+.photo.polaroid img::after,
+.photo.polaroid .img-inner-wrapper::after {
   content: "";
   position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 14px;
-  bottom: 54px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border: 1px solid rgba(30, 30, 30, 0.07);
   border-radius: 10px;
   pointer-events: none;
+}
+.photo.polaroid img {
+  width: 100%;
+  height: auto;
+}
+/* --- 动态手写签名（单图特有） --- */
+.photo.polaroid .handwritten-note {
+  margin-top: 15px;
+  text-align: right;
+  padding-right: 5px;
+  /* 文字如果很多，会向下撑开 .photo.polaroid 的高度 */
+  font-family: 'PingFangXiangSi', 'Caveat', cursive;
+  font-size: 22px;
+  line-height: 1.3;
+  color: rgba(30, 30, 30, 0.65);
+  transform: rotate(-1.5deg);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+/* 如果有手写字，减少底部 padding，改由文字撑起空间 */
+.photo.polaroid:has(.handwritten-note) {
+  padding-bottom: 20px;
+}
+/* --- 标题样式 --- */
+.photo.polaroid figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #999;
 }
 /* =========================
    torn：更明显的撕边（上沿）
