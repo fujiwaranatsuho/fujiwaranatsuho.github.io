@@ -4361,6 +4361,21 @@ iframe.video-box {
 .img-row::-webkit-scrollbar-track {
   background: transparent;
 }
+:root {
+  /* warning note 改成绿色系 */
+  --note-warning-bg-color: #eaf6ea;
+  --note-warning-border-color: #8bcf8b;
+  --note-warning-color: #3f6f3f;
+}
+/* 如果主题没有使用 border 变量，手动覆盖 */
+.trm-note.warning {
+  background-color: var(--note-warning-bg-color);
+  border-color: var(--note-warning-border-color);
+  color: var(--note-warning-color);
+}
+.trm-note.warning .trm-note-title {
+  color: #4d8b4d;
+}
 /* db-card -------- start */
 .db-card {
   margin: 2.5rem 2.5rem;
