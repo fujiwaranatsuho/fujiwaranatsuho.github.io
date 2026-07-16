@@ -4361,37 +4361,20 @@ iframe.video-box {
 .img-row::-webkit-scrollbar-track {
   background: transparent;
 }
-/* ================================
-   TRM Note - 文艺绿色主题
-   ================================ */
-:root {
-  /* warning note 背景 */
-  --note-warning-bg-color: #f2f7f1;
-}
-/* 主体 */
 .trm-note.warning {
-  background-color: #f2f7f1;
-  border: 1px solid #c8ddc3;
-  border-left: 4px solid #7fa77a;
+  background-color: #f2f7f1 !important;
+  border: 1px solid #c8ddc3 !important;
+  border-left: 4px solid #7fa77a !important;
   border-radius: 8px;
-  padding: 16px 18px 10px;
   color: #526b52;
   box-shadow: 0 2px 8px rgba(90, 120, 80, 0.08);
 }
-/* 标题 */
 .trm-note.warning .trm-note-title {
   color: #5d8058;
   font-weight: 600;
-  letter-spacing: 1px;
 }
-/* 正文 */
 .trm-note.warning p {
   color: #526b52;
-}
-/* 如果主题给 warning 图标/装饰元素设置了黄色 */
-.trm-note.warning::before,
-.trm-note.warning::after {
-  color: #7fa77a;
 }
 /* db-card -------- start */
 .db-card {
