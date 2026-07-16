@@ -4361,20 +4361,23 @@ iframe.video-box {
 .img-row::-webkit-scrollbar-track {
   background: transparent;
 }
+/* warning样式 */
 .trm-note.warning {
-  background-color: #f2f7f1 !important;
-  border: 1px solid #c8ddc3 !important;
-  border-left: 4px solid #7fa77a !important;
-  border-radius: 8px;
-  color: #526b52;
-  box-shadow: 0 2px 8px rgba(90, 120, 80, 0.08);
+  background: #f7faf5;
+  border: 1px solid #dce8d5;
+  border-left: 3px solid #8ca982;
+  border-radius: 14px;
+  padding: 18px 22px 14px;
+  color: #586b53;
 }
 .trm-note.warning .trm-note-title {
-  color: #5d8058;
-  font-weight: 600;
+  color: #6f8968;
+  letter-spacing: 2px;
+  font-weight: 500;
 }
 .trm-note.warning p {
-  color: #526b52;
+  color: #586b53;
+  line-height: 1.9;
 }
 /* db-card -------- start */
 .db-card {
